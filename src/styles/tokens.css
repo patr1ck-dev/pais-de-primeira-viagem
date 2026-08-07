@@ -1,0 +1,180 @@
+/*
+ * Tokens das duas paletas do funil.
+ *
+ * A estrutura tem duas camadas de propósito:
+ *
+ *   1. Cores literais do protótipo (--cream, --emerald, ...). São a fonte da
+ *      verdade e existem só para serem referenciadas pela camada 2. Componente
+ *      nenhum deve usá-las direto.
+ *   2. Tokens semânticos (--surface, --text, --accent, ...). São os únicos que
+ *      os componentes consomem.
+ *
+ * Trocar `data-palette` no wrapper troca a camada 2 inteira, e por isso um
+ * mesmo <Button> serve a landing âmbar e o checkout esmeralda sem `if` de tema
+ * espalhado pelo código.
+ */
+
+:root {
+  /* ---- Camada 1: landing (claro/acolhedor) ---- */
+  --night: #1b2436;
+  --night-2: #131a29;
+  --night-3: #232f45;
+  --cream: #fbf3e7;
+  --cream-2: #f3e6d3;
+  --amber: #e8a659;
+  --amber-deep: #c97c3d;
+  --plum: #8b5a6b;
+  --ink: #2a211b;
+  --ink-soft: rgba(42, 33, 27, 0.68);
+  --paper: #f5ede0;
+  --paper-soft: rgba(245, 237, 224, 0.7);
+
+  /* ---- Camada 1: produto + checkout (grafite/esmeralda) ---- */
+  --bg: #0a0a0c;
+  --bg-2: #111114;
+  --graphite: #1b1c20;
+  --graphite-2: #25262b;
+  --hair: #2a2b30;
+  --white: #f5f5f7;
+  --dim: #8b8d96;
+  --dimmer: #5c5e68;
+  --emerald: #12b981;
+  --emerald-dim: #0b6b4c;
+  --emerald-glow: rgba(18, 185, 129, 0.14);
+  --blue: #3b82f6;
+
+  /* ---- Métricas compartilhadas ---- */
+  --max: 1160px;
+  --radius-card: 18px;
+  --radius-pill: 999px;
+}
+
+/* ---- Camada 2: paleta clara (landing) ---- */
+[data-palette='warm'] {
+  --surface: var(--cream);
+  --surface-2: var(--cream-2);
+  --surface-raised: #ffffff;
+
+  /* As seções noturnas da landing (hero, dores) invertem sobre a mesma paleta. */
+  --surface-invert: var(--night);
+  --surface-invert-2: var(--night-2);
+  --surface-invert-3: var(--night-3);
+  --text-invert: var(--paper);
+  --text-invert-muted: var(--paper-soft);
+
+  --text: var(--ink);
+  --text-muted: var(--ink-soft);
+
+  --line: rgba(42, 33, 27, 0.1);
+  --line-invert: rgba(245, 237, 224, 0.08);
+
+  --accent: var(--amber);
+  --accent-strong: var(--amber-deep);
+  --accent-soft: rgba(232, 166, 89, 0.14);
+  --accent-line: rgba(232, 166, 89, 0.3);
+  --on-accent: #221407;
+
+  --accent-alt: var(--plum);
+  --accent-alt-soft: rgba(139, 90, 107, 0.1);
+  --accent-alt-line: rgba(139, 90, 107, 0.25);
+
+  --shadow-accent: 0 10px 30px -10px rgba(232, 166, 89, 0.65);
+  --shadow-accent-hover: 0 14px 34px -8px rgba(232, 166, 89, 0.75);
+
+  --font-heading: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --heading-weight: 600;
+  --heading-leading: 1.1;
+  --body-leading: 1.55;
+}
+
+/* ---- Camada 2: paleta escura (produto + checkout) ---- */
+[data-palette='dark'] {
+  --surface: var(--bg);
+  --surface-2: var(--bg-2);
+  --surface-raised: var(--graphite);
+  --surface-raised-2: var(--graphite-2);
+
+  /* No tema escuro não há inversão: os aliases apontam para o próprio tema,
+     para que um componente compartilhado nunca resolva var indefinida. */
+  --surface-invert: var(--graphite);
+  --surface-invert-2: var(--graphite-2);
+  --surface-invert-3: var(--graphite-2);
+  --text-invert: var(--white);
+  --text-invert-muted: var(--dim);
+
+  --text: var(--white);
+  --text-muted: var(--dim);
+  --text-faint: var(--dimmer);
+
+  --line: var(--hair);
+  --line-invert: var(--hair);
+
+  --accent: var(--emerald);
+  --accent-strong: var(--emerald-dim);
+  --accent-soft: var(--emerald-glow);
+  --accent-line: rgba(18, 185, 129, 0.3);
+  --on-accent: #04140d;
+
+  --accent-alt: var(--blue);
+  --accent-alt-soft: rgba(59, 130, 246, 0.12);
+  --accent-alt-line: rgba(59, 130, 246, 0.3);
+
+  --shadow-accent:
+    0 0 0 1px rgba(18, 185, 129, 0.4), 0 12px 30px -10px rgba(18, 185, 129, 0.5);
+  --shadow-accent-hover:
+    0 0 0 1px rgba(18, 185, 129, 0.6), 0 16px 34px -8px rgba(18, 185, 129, 0.65);
+
+  --font-heading: var(--font-manrope), sans-serif;
+  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --heading-weight: 700;
+  --heading-leading: 1.15;
+  --body-leading: 1.6;
+}
+
+/* --text-faint só existe na paleta escura no protótipo; o fallback evita
+   que a landing herde uma var vazia se um componente compartilhado usá-la. */
+[data-palette='warm'] {
+  --text-faint: var(--ink-soft);
+}
+
+/*
+ * Ponte para o Tailwind. `inline` é obrigatório aqui: sem ele o Tailwind
+ * resolveria o valor da var em build-time e as duas paletas virariam a mesma
+ * cor. Com `inline`, a utility emite var(--surface) e a troca acontece em
+ * runtime, que é o que faz `data-palette` funcionar.
+ */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-invert: var(--surface-invert);
+  --color-surface-invert-2: var(--surface-invert-2);
+  --color-surface-invert-3: var(--surface-invert-3);
+
+  --color-content: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-invert: var(--text-invert);
+  --color-invert-muted: var(--text-invert-muted);
+
+  --color-line: var(--line);
+  --color-line-invert: var(--line-invert);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-on-accent: var(--on-accent);
+  --color-accent-alt: var(--accent-alt);
+  --color-accent-alt-soft: var(--accent-alt-soft);
+  --color-accent-alt-line: var(--accent-alt-line);
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  --container-site: var(--max);
+}
