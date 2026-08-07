@@ -1,0 +1,8 @@
+# Normaliza para LF no repositório. Sem isso, o checkout no Windows grava CRLF
+# e o build na Vercel (Linux) mostra o arquivo inteiro como alterado.
+* text=auto eol=lf
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.woff2 binary
