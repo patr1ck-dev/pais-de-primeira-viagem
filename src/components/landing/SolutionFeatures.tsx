@@ -5,10 +5,17 @@ import { FEATURES } from '@/lib/content';
 export function Dawn() {
   return (
     <section
-      className="px-6 pt-[100px] pb-10 text-center text-white"
+      /*
+       * O protótipo punha o creme em 78% do gradiente, mas o parágrafo caía
+       * justamente ali: texto branco sobre fundo claro, praticamente ilegível.
+       * Empurrar as paradas claras para o fim (e dar respiro no pb) mantém o
+       * texto na faixa escura — corrige o contraste sem repintar nada, que é
+       * o efeito que o design queria.
+       */
+      className="px-6 pt-[100px] pb-[180px] text-center text-white"
       style={{
         background:
-          'linear-gradient(180deg, var(--surface-invert-2) 0%, var(--surface-invert) 20%, #7A5D4A 48%, var(--surface-2) 78%, var(--surface) 100%)',
+          'linear-gradient(180deg, var(--surface-invert-2) 0%, var(--surface-invert) 40%, #7A5D4A 72%, var(--surface-2) 92%, var(--surface) 100%)',
       }}
     >
       <Reveal className="max-w-site mx-auto">

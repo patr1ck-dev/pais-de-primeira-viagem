@@ -59,42 +59,55 @@ export type ButtonProps = ButtonAsButton | ButtonAsLink;
  * O protótipo usa <a> estilizado de botão em quase todo CTA — sem esse ramo,
  * cada CTA precisaria duplicar as classes.
  */
-export function Button(props: ButtonProps) {
-  const {
-    variant = 'primary',
-    size = 'md',
-    fullWidth = false,
-    className,
-    children,
-    ...rest
-  } = props;
-
-  const classes = cn(
+function classesFor({ variant, size, fullWidth, className }: CommonProps) {
+  return cn(
     base,
-    sizes[size],
-    variants[variant],
+    sizes[size ?? 'md'],
+    variants[variant ?? 'primary'],
     fullWidth && 'w-full',
     className
   );
+}
 
-  if (typeof rest.href === 'string') {
-    const { href, ...anchorProps } =
-      rest as AnchorHTMLAttributes<HTMLAnchorElement> & {
-        href: string;
-      };
+export function Button(props: ButtonProps) {
+  // Estreitar a união ANTES de desestruturar: `href?: undefined` no ramo
+  // <button> discrimina os dois membros, então cada bloco já vê o tipo certo
+  // e nenhum cast é necessário.
+  if (props.href !== undefined) {
+    const { href, variant, size, fullWidth, className, children, ...anchor } =
+      props;
     return (
-      <Link href={href} className={classes} {...anchorProps}>
+      <Link
+        href={href}
+        className={classesFor({
+          variant,
+          size,
+          fullWidth,
+          className,
+          children,
+        })}
+        {...anchor}
+      >
         {children}
       </Link>
     );
   }
 
-  const buttonProps = rest as ButtonHTMLAttributes<HTMLButtonElement>;
+  const {
+    href: _href,
+    variant,
+    size,
+    fullWidth,
+    className,
+    children,
+    type = 'button',
+    ...button
+  } = props;
   return (
     <button
-      type={buttonProps.type ?? 'button'}
-      className={classes}
-      {...buttonProps}
+      type={type}
+      className={classesFor({ variant, size, fullWidth, className, children })}
+      {...button}
     >
       {children}
     </button>

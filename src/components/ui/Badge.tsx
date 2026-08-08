@@ -8,7 +8,7 @@ const tones: Record<BadgeTone, string> = {
   accent: 'bg-accent-soft text-accent border-accent-line',
   /* Ameixa na landing, azul no tema escuro — o token alterna sozinho. */
   'accent-alt': 'bg-accent-alt-soft text-accent-alt border-accent-alt-line',
-  invert: 'bg-white/12 text-invert border-white/25',
+  invert: 'bg-overlay-soft text-invert border-overlay-line',
 };
 
 type BadgeProps = {

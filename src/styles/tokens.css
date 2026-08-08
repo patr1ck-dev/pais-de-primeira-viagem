@@ -78,6 +78,10 @@
   --accent-alt-soft: rgba(139, 90, 107, 0.1);
   --accent-alt-line: rgba(139, 90, 107, 0.25);
 
+  /* Véu neutro para elementos sobre fundo escuro/gradiente (badge da "virada"). */
+  --overlay-soft: rgba(255, 255, 255, 0.12);
+  --overlay-line: rgba(255, 255, 255, 0.25);
+
   --shadow-accent: 0 10px 30px -10px rgba(232, 166, 89, 0.65);
   --shadow-accent-hover: 0 14px 34px -8px rgba(232, 166, 89, 0.75);
 
@@ -119,6 +123,9 @@
   --accent-alt: var(--blue);
   --accent-alt-soft: rgba(59, 130, 246, 0.12);
   --accent-alt-line: rgba(59, 130, 246, 0.3);
+
+  --overlay-soft: rgba(255, 255, 255, 0.1);
+  --overlay-line: rgba(255, 255, 255, 0.2);
 
   --shadow-accent:
     0 0 0 1px rgba(18, 185, 129, 0.4), 0 12px 30px -10px rgba(18, 185, 129, 0.5);
@@ -169,6 +176,8 @@
   --color-accent-alt: var(--accent-alt);
   --color-accent-alt-soft: var(--accent-alt-soft);
   --color-accent-alt-line: var(--accent-alt-line);
+  --color-overlay-soft: var(--overlay-soft);
+  --color-overlay-line: var(--overlay-line);
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
