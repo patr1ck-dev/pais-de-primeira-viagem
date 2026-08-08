@@ -20,6 +20,7 @@
     "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^1.0.7",
     "clsx": "2.1.1",
     "mercadopago": "3.3.0",
     "next": "16.3.0",

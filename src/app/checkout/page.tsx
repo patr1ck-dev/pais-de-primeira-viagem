@@ -34,7 +34,12 @@ export default function CheckoutPage() {
           <CheckoutSteps />
 
           <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-            <PaymentForm />
+            {/* A chave pública é lida no servidor e passada como prop: assim o
+                nome da variável segue o .env.example, sem precisar do prefixo
+                NEXT_PUBLIC_. Ela é pública por natureza — só tokeniza. */}
+            <PaymentForm
+              mercadoPagoPublicKey={process.env.MERCADOPAGO_PUBLIC_KEY ?? null}
+            />
             <OrderSummary />
           </div>
         </div>
