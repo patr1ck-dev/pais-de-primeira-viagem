@@ -1,6 +1,24 @@
 @import 'tailwindcss';
 @import './tokens.css';
 
+/* Pulsação da luz no hero da landing. Aplicada com `motion-safe:` no
+   componente, então some sob prefers-reduced-motion. */
+@theme {
+  --animate-breathe: breathe 5s ease-in-out infinite;
+
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+  }
+}
+
 @layer base {
   *,
   *::before,
@@ -52,10 +70,10 @@
 }
 
 @layer components {
-  /* Scroll-reveal. O estado inicial só é aplicado quando o JS assume o
-     controle (data-reveal-ready no <html>): sem isso, quem tem JS bloqueado
-     ficaria com a página inteira invisível. */
-  [data-reveal-ready] .reveal {
+  /* Scroll-reveal. O estado escondido já vem no HTML do servidor, então não há
+     flash de conteúdo antes da hidratação; o <noscript> no layout desfaz isso
+     para quem não tem JS. */
+  .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition:
@@ -63,7 +81,7 @@
       transform 0.7s ease;
   }
 
-  [data-reveal-ready] .reveal.is-visible {
+  .reveal.is-visible {
     opacity: 1;
     transform: none;
   }
@@ -74,8 +92,8 @@
     scroll-behavior: auto;
   }
 
-  [data-reveal-ready] .reveal,
-  [data-reveal-ready] .reveal.is-visible {
+  .reveal,
+  .reveal.is-visible {
     opacity: 1;
     transform: none;
     transition: none;

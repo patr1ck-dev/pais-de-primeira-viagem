@@ -1,6 +1,15 @@
 import type { Metadata } from 'next';
 
-import { PaletteScope } from '@/components/ui';
+import {
+  Chapters,
+  FinalCta,
+  ProdutoFaq,
+  ProdutoFeatures,
+  ProdutoHero,
+  Quote,
+  Stats,
+} from '@/components/produto';
+import { Button, PaletteScope, SiteFooter, SiteNav } from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Pais de Primeira Viagem — O que tem dentro do guia',
@@ -8,14 +17,29 @@ export const metadata: Metadata = {
     'Conheça todos os capítulos do guia Pais de Primeira Viagem: banho, fraldas, roupas e primeiros socorros, explicados com calma. Garantia de 7 dias.',
 };
 
-// Esqueleto da Fase 2. Capítulos, features, stats, FAQ e CTA entram na Fase 3.
 export default function ProdutoPage() {
   return (
-    <PaletteScope palette="dark" className="min-h-screen">
-      <main className="max-w-site mx-auto px-6 py-24">
-        <h1 className="text-4xl">Detalhes do guia</h1>
-        <p className="text-muted mt-4">Conteúdo chega na Fase 3.</p>
+    <PaletteScope palette="dark">
+      <SiteNav
+        left={{ backHref: '/', backLabel: 'Voltar' }}
+        right={
+          <Button href="/checkout" size="sm">
+            Comprar agora
+          </Button>
+        }
+      />
+
+      <main>
+        <ProdutoHero />
+        <Chapters />
+        <ProdutoFeatures />
+        <Stats />
+        <Quote />
+        <ProdutoFaq />
+        <FinalCta />
       </main>
+
+      <SiteFooter />
     </PaletteScope>
   );
 }

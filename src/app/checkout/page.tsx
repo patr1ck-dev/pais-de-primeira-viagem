@@ -1,6 +1,16 @@
 import type { Metadata } from 'next';
 
-import { PaletteScope } from '@/components/ui';
+import {
+  CheckoutSteps,
+  OrderSummary,
+  PaymentForm,
+} from '@/components/checkout';
+import {
+  PaletteScope,
+  SecureBadge,
+  SiteFooter,
+  SiteNav,
+} from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Finalizar compra — Pais de Primeira Viagem',
@@ -10,14 +20,27 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Esqueleto da Fase 2. PaymentForm, OrderSummary e PixQrCode entram nas Fases 3 e 4.
 export default function CheckoutPage() {
   return (
-    <PaletteScope palette="dark" className="min-h-screen">
-      <main className="max-w-site mx-auto px-6 py-24">
-        <h1 className="text-4xl">Finalizar compra</h1>
-        <p className="text-muted mt-4">Formulário chega nas Fases 3 e 4.</p>
+    <PaletteScope palette="dark" className="flex min-h-screen flex-col">
+      <SiteNav
+        left={{ backHref: '/produto', backLabel: 'Voltar aos detalhes' }}
+        right={<SecureBadge />}
+        sticky={false}
+      />
+
+      <main className="flex-1 pt-14 pb-20">
+        <div className="mx-auto w-full max-w-[1020px] px-6">
+          <CheckoutSteps />
+
+          <div className="grid items-start gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+            <PaymentForm />
+            <OrderSummary />
+          </div>
+        </div>
       </main>
+
+      <SiteFooter showCopyright={false} />
     </PaletteScope>
   );
 }

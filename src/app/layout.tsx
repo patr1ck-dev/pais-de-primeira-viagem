@@ -41,6 +41,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="pt-BR"
       className={`${inter.variable} ${fraunces.variable} ${manrope.variable}`}
     >
+      <head>
+        {/*
+         * Rede de segurança do scroll-reveal: sem JS, o IntersectionObserver
+         * nunca roda e a página inteira ficaria invisível (defeito que o
+         * protótipo estático tinha). Com <noscript> o estado escondido é
+         * anulado só nesse caso — sem script, sem mismatch de hidratação.
+         */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html:
+              '<style>.reveal{opacity:1!important;transform:none!important}</style>',
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
