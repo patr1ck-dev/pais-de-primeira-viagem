@@ -25,8 +25,19 @@ export const env = {
   get mercadoPagoPublicKey(): string {
     return required('MERCADOPAGO_PUBLIC_KEY');
   },
+  /** Segredo da assinatura de webhook, do painel do Mercado Pago. */
+  get mercadoPagoWebhookSecret(): string {
+    return required('MERCADOPAGO_WEBHOOK_SECRET');
+  },
   get resendApiKey(): string {
     return required('RESEND_API_KEY');
+  },
+  /** Remetente verificado no Resend. */
+  get emailFrom(): string {
+    return (
+      process.env.EMAIL_FROM ??
+      'Pais de Primeira Viagem <onboarding@resend.dev>'
+    );
   },
   get downloadTokenSecret(): string {
     return required('DOWNLOAD_TOKEN_SECRET');
