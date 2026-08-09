@@ -152,8 +152,18 @@ Marque na ordem. Cada item falha por um motivo diferente.
       cobrado continua **R$ 29,90**
 - [ ] Acessar `/private/guia-pais-de-primeira-viagem.pdf` no navegador → `404`
 
-Os quatro primeiros já foram verificados localmente com `curl`. Os dois últimos
-só dá para confirmar com credencial ativa.
+Já verificados localmente com `curl`, sem precisar de credencial:
+
+- webhook sem assinatura → `401`
+- webhook com assinatura errada → `401`
+- webhook com assinatura **correta** → passa da validação (prova que ela
+  discrimina, em vez de recusar tudo)
+- token adulterado → `403`, token expirado → `410`, token válido → `200` + PDF
+- `/private/guia-...pdf`, `/guia-...pdf` e `/private/README.md` → `404`
+
+Os dois restantes (`/obrigado` com `payment_id` alheio e o valor forçado no
+corpo) dependem de credencial ativa — são os únicos itens desta seção que ficam
+para você.
 
 ### Expiração do link
 
